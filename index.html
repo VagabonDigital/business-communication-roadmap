@@ -1028,6 +1028,132 @@
       outline: none;
     }
 
+    /* ROADMAP SUMMARY */
+    .roadmap-summary-card {
+      padding: 18px 22px;
+      margin-bottom: 16px;
+    }
+
+    .summary-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    .why-module-box {
+      margin-bottom: 12px;
+    }
+
+    .why-module-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    .why-module-box p {
+      font-size: 14.5px;
+      line-height: 1.65;
+      color: var(--navy-mid);
+      margin: 0;
+      max-width: 960px;
+    }
+
+    .summary-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--teal);
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .summary-toggle:hover {
+      color: var(--navy);
+    }
+
+    .summary-toggle-chevron {
+      transition: transform 0.2s ease;
+    }
+
+    .roadmap-summary-card.open .summary-toggle-chevron {
+      transform: rotate(180deg);
+    }
+
+    .roadmap-summary-details {
+      display: none;
+      border-top: 1px solid var(--border);
+      margin-top: 14px;
+      padding-top: 14px;
+    }
+
+    .roadmap-summary-card.open .roadmap-summary-details {
+      display: block;
+    }
+
+    .roadmap-summary-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      align-items: start;
+      gap: 14px;
+    }
+
+    .summary-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .summary-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .summary-chip {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 5px 10px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--navy-mid);
+      font-size: 12.5px;
+      font-weight: 500;
+      line-height: 1.2;
+    }
+
+    .summary-chip.more {
+      color: var(--teal);
+      background: transparent;
+      border-color: var(--teal-pale);
+      font-weight: 600;
+    }
+
+    @media (max-width: 700px) {
+      .summary-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+      }
+    }
+
     /* AP BLOCKS */
     .ap-grid {
       display: grid;
@@ -1998,6 +2124,57 @@
           </svg>
         </div>
 
+        <!-- ROADMAP SUMMARY -->
+        <div class="ap-block-full roadmap-summary-card" id="roadmapSummaryCard">
+          <div class="summary-eyebrow">Based on Your Roadmap</div>
+
+          <div class="why-module-box">
+            <div class="why-module-label">Why this fits</div>
+            <p id="whyModuleFitsText"></p>
+          </div>
+
+          <button class="summary-toggle" type="button" id="roadmapSummaryToggle" onclick="toggleRoadmapDetails()"
+            aria-expanded="false">
+            <span id="roadmapSummaryToggleText">Show roadmap details</span>
+            <svg class="summary-toggle-chevron" width="15" height="15" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
+                stroke-linejoin="round" />
+            </svg>
+          </button>
+
+          <div class="roadmap-summary-details" id="roadmapSummaryDetails">
+            <div class="roadmap-summary-grid">
+              <div class="summary-row" id="summarySituationRow">
+                <div class="summary-label">Situation</div>
+                <div class="summary-chips" id="summarySituationChips"></div>
+              </div>
+
+              <div class="summary-row" id="summaryGoalRow">
+                <div class="summary-label">Goal</div>
+                <div class="summary-chips" id="summaryGoalChips"></div>
+              </div>
+
+              <div class="summary-row" id="summaryChallengeRow">
+                <div class="summary-label">Challenge</div>
+                <div class="summary-chips" id="summaryChallengeChips"></div>
+              </div>
+
+              <div class="summary-row" id="summaryUpgradeRow">
+                <div class="summary-label">First Upgrade</div>
+                <div class="summary-chips" id="summaryUpgradeChips"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WHAT THIS BUILDS -->
+        <div class="ap-block-full">
+          <div class="ap-block-label">What This Will Build</div>
+          <ul class="outcome-list" id="ap-outcomes">
+            <!-- populated by JS -->
+          </ul>
+        </div>
+
         <!-- FOCUS + OUTCOMES GRID -->
         <div class="ap-grid">
 
@@ -2022,14 +2199,6 @@
 
         </div>
 
-        <!-- WHAT THIS BUILDS -->
-        <div class="ap-block-full">
-          <div class="ap-block-label">What This Will Build</div>
-          <ul class="outcome-list" id="ap-outcomes">
-            <!-- populated by JS -->
-          </ul>
-        </div>
-
         <!-- NEXT MODULES -->
         <div class="ap-block-full">
           <div class="ap-block-label">Useful Next Modules</div>
@@ -2040,9 +2209,9 @@
 
         <!-- PREP -->
         <div class="ap-block-full">
-          <div class="ap-block-label">Helpful Prep, Not Required</div>
-          <p style="font-size:12.5px; color:var(--muted); margin-bottom:10px; line-height:1.5;">You can bring one of
-            these examples if it is useful, but nothing is required.</p>
+          <div class="ap-block-label">Helpful Prep</div>
+          <p style="font-size:12.5px; color:var(--muted); margin-bottom:10px; line-height:1.5;">Optional examples for
+            future sessions:</p>
           <div class="prep-chips" id="ap-prep-chips">
             <!-- populated by JS -->
           </div>
@@ -2575,6 +2744,10 @@
       updateProgress(n);
       updateBottomBar(n);
       window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (n === 6) {
+        setTimeout(renderRoadmapSummary, 0);
+      }
     }
 
     function updateProgress(n) {
@@ -2744,6 +2917,136 @@
       goToPage(6);
     }
 
+    function formatChipLabelFallback(value) {
+      return value
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+
+    function getSelectedLabelsFromState(group) {
+      const values = state[group] || [];
+
+      return values.map(value => {
+        const chip = Array.from(document.querySelectorAll('.chip')).find(chip => {
+          const clickAttr = chip.getAttribute('onclick') || '';
+          return chip.dataset.value === value && clickAttr.includes(`'${group}'`);
+        });
+
+        return chip
+          ? chip.textContent.trim().replace(/\s+/g, ' ')
+          : formatChipLabelFallback(value);
+      }).filter(Boolean);
+    }
+
+    function renderSummaryChipRow(rowId, chipsId, labels, limit = 3) {
+      const row = document.getElementById(rowId);
+      const container = document.getElementById(chipsId);
+
+      if (!row || !container) return;
+
+      container.innerHTML = '';
+
+      if (!labels || labels.length === 0) {
+        row.classList.add('hidden');
+        return;
+      }
+
+      row.classList.remove('hidden');
+
+      labels.slice(0, limit).forEach(label => {
+        const chip = document.createElement('span');
+        chip.className = 'summary-chip';
+        chip.textContent = label;
+        container.appendChild(chip);
+      });
+
+      if (labels.length > limit) {
+        const moreChip = document.createElement('span');
+        moreChip.className = 'summary-chip more';
+        moreChip.textContent = `+${labels.length - limit} more`;
+        container.appendChild(moreChip);
+      }
+    }
+
+    function joinForSentence(items) {
+      if (!items || items.length === 0) return '';
+      if (items.length === 1) return items[0].toLowerCase();
+      return `${items[0].toLowerCase()} and ${items[1].toLowerCase()}`;
+    }
+
+    function getCurrentModuleTitle() {
+      const titleEl = document.getElementById('ap-module-title');
+      return titleEl ? titleEl.textContent.trim() : 'This module';
+    }
+
+    function buildWhyModuleFits(moduleTitle, situations, goals, challenges, upgrades) {
+      const situationText = joinForSentence(situations.slice(0, 2));
+      const goalText = joinForSentence(goals.slice(0, 2));
+      const challengeText = joinForSentence(challenges.slice(0, 2));
+      const upgradeText = joinForSentence(upgrades.slice(0, 1));
+
+      if (situationText && goalText && challengeText) {
+        return `${moduleTitle} is recommended because your selections point to ${situationText}, a goal of sounding ${goalText}, and challenges like ${challengeText}.`;
+      }
+
+      if (situationText && goalText) {
+        return `${moduleTitle} is recommended because your selections point to ${situationText} and a goal of sounding ${goalText}.`;
+      }
+
+      if (situationText && challengeText) {
+        return `${moduleTitle} is recommended because your selections point to ${situationText} and challenges like ${challengeText}.`;
+      }
+
+      if (upgradeText) {
+        return `${moduleTitle} is recommended because it matches your selected starting upgrade: ${upgradeText}.`;
+      }
+
+      return `${moduleTitle} is recommended as the strongest starting point based on the roadmap selections.`;
+    }
+
+    function toggleRoadmapDetails() {
+      const card = document.getElementById('roadmapSummaryCard');
+      const toggle = document.getElementById('roadmapSummaryToggle');
+      const toggleText = document.getElementById('roadmapSummaryToggleText');
+
+      if (!card) return;
+
+      const isOpen = card.classList.toggle('open');
+
+      if (toggle) {
+        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      }
+
+      if (toggleText) {
+        toggleText.textContent = isOpen ? 'Hide roadmap details' : 'Show roadmap details';
+      }
+    }
+
+    function renderRoadmapSummary() {
+      const situations = getSelectedLabelsFromState('situation');
+      const goals = getSelectedLabelsFromState('goal');
+      const challenges = getSelectedLabelsFromState('challenge');
+      const upgrades = getSelectedLabelsFromState('upgrade');
+
+      renderSummaryChipRow('summarySituationRow', 'summarySituationChips', situations);
+      renderSummaryChipRow('summaryGoalRow', 'summaryGoalChips', goals);
+      renderSummaryChipRow('summaryChallengeRow', 'summaryChallengeChips', challenges);
+      renderSummaryChipRow('summaryUpgradeRow', 'summaryUpgradeChips', upgrades);
+
+      const whyText = document.getElementById('whyModuleFitsText');
+
+      if (whyText) {
+        whyText.textContent = buildWhyModuleFits(
+          getCurrentModuleTitle(),
+          situations,
+          goals,
+          challenges,
+          upgrades
+        );
+      }
+    }
+
     function buildActionPlan() {
       const ranked = getTopModules();
       const primaryIdx = state.overriddenModule !== null ? state.overriddenModule : ranked[0].idx;
@@ -2856,6 +3159,8 @@
       }
       buildActionPlan();
     }
+
+    renderRoadmapSummary();
 
     // ═══════════════════════════════════════════════
     // RESET
