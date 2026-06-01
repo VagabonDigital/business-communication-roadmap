@@ -1466,6 +1466,198 @@
     #page-4 .fourc-section {
       margin-bottom: 0;
     }
+
+    /* ── METHOD NOTES BUTTON ─────────────────────────────── */
+    .btn-method-notes {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 7px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: var(--transition);
+      letter-spacing: 0.01em;
+    }
+
+    .btn-method-notes:hover {
+      border-color: var(--teal);
+      color: var(--teal);
+      background: var(--teal-pale);
+    }
+
+    /* ── METHOD NOTES MODAL ──────────────────────────────── */
+    .method-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(28, 43, 74, 0.45);
+      z-index: 500;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(2px);
+    }
+
+    .method-modal-overlay.open {
+      display: flex;
+      animation: fadeIn 0.18s ease both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    .method-modal {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      width: 100%;
+      max-width: 560px;
+      max-height: 82vh;
+      display: flex;
+      flex-direction: column;
+      animation: slideUp 0.22s cubic-bezier(0.4, 0, 0.2, 1) both;
+      overflow: hidden;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(16px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    .method-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .method-modal-title {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.01em;
+    }
+
+    .method-modal-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: var(--radius-sm);
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: var(--transition);
+      flex-shrink: 0;
+    }
+
+    .method-modal-close:hover {
+      border-color: var(--navy);
+      color: var(--navy);
+      background: var(--bg);
+    }
+
+    .method-modal-body {
+      padding: 20px 24px 24px;
+      overflow-y: auto;
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.65;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .method-modal-body p {
+      margin: 0;
+    }
+
+    .method-source {
+      display: flex;
+      gap: 12px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+
+    .method-source-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--navy);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .method-source > div {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .method-source-title {
+      font-weight: 600;
+      color: var(--navy);
+      font-size: 13px;
+    }
+
+    .method-combines {
+      background: var(--teal-pale);
+      border: 1px solid var(--connection-border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+    }
+
+    .method-combines-label {
+      font-weight: 600;
+      color: var(--teal);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .method-combines ul {
+      margin: 0;
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .method-combines li {
+      font-size: 13px;
+      color: var(--navy-mid);
+    }
+
+    .method-modal-byline {
+      font-size: 12px;
+      color: var(--muted);
+      font-style: italic;
+      text-align: right;
+      padding-top: 4px;
+      opacity: 0.7;
+    }
   </style>
 </head>
 
@@ -2126,9 +2318,18 @@
 
         <!-- ROADMAP SUMMARY -->
         <div class="ap-block-full roadmap-summary-card" id="roadmapSummaryCard">
-          <div class="summary-eyebrow">Based on Your Roadmap</div>
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom: 0;">
+            <div class="summary-eyebrow" style="margin-bottom:0;">Based on Your Roadmap</div>
+            <button class="btn-method-notes" onclick="openMethodNotes()" type="button">
+              <svg width="12" height="12" viewBox="0 0 13 13" fill="none">
+                <circle cx="6.5" cy="6.5" r="5.5" stroke="currentColor" stroke-width="1.3"/>
+                <path d="M6.5 5.5v4M6.5 4h.01" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              Method Notes
+            </button>
+          </div>
 
-          <div class="why-module-box">
+          <div class="why-module-box" style="margin-top:10px;">
             <div class="why-module-label">Why this fits</div>
             <p id="whyModuleFitsText"></p>
           </div>
@@ -2235,6 +2436,72 @@
     </div><!-- /page-content -->
 
   </div><!-- /app-shell -->
+
+  <!-- METHOD NOTES MODAL -->
+  <div class="method-modal-overlay" id="methodNotesOverlay" onclick="closeMethodNotes()" role="dialog" aria-modal="true" aria-labelledby="methodNotesTitle">
+    <div class="method-modal" onclick="event.stopPropagation()">
+      <div class="method-modal-header">
+        <h3 class="method-modal-title" id="methodNotesTitle">Method Notes</h3>
+        <button class="method-modal-close" onclick="closeMethodNotes()" aria-label="Close">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+      <div class="method-modal-body">
+        <p>This roadmap and the coaching modules were built for professional English coaching sessions with client-facing and business professionals.</p>
+        <p>The material is based on four main sources:</p>
+
+        <div class="method-source">
+          <div class="method-source-num">1</div>
+          <div>
+            <div class="method-source-title">Real client-facing communication experience</div>
+            <p>The scenarios reflect common professional situations such as client calls, discovery conversations, value explanations, objections, follow-ups, interviews, meetings, presentations, negotiation, leadership conversations, and cross-cultural communication.</p>
+          </div>
+        </div>
+
+        <div class="method-source">
+          <div class="method-source-num">2</div>
+          <div>
+            <div class="method-source-title">Common professional communication patterns</div>
+            <p>The material draws on recurring communication patterns used across sales, client service, account management, interviews, meetings, presentations, negotiation, follow-up, and cross-cultural workplace communication.</p>
+            <p>These patterns are turned into practical English coaching: what to say, how to structure it, how to adjust the tone, and how to practise it in realistic professional situations.</p>
+          </div>
+        </div>
+
+        <div class="method-source">
+          <div class="method-source-num">3</div>
+          <div>
+            <div class="method-source-title">English coaching methodology</div>
+            <p>The lessons are built around skill blocks: useful language, weak-to-stronger examples, controlled practice, applied practice, realistic challenges, and live feedback.</p>
+            <p>This helps students build one communication move at a time instead of memorising long phrase lists.</p>
+          </div>
+        </div>
+
+        <div class="method-source">
+          <div class="method-source-num">4</div>
+          <div>
+            <div class="method-source-title">Live personalisation</div>
+            <p>The modules provide the core material, but your real work situations can be used whenever they are useful.</p>
+            <p>This means the session can work with no preparation, while still becoming specific to your role, industry, and communication challenges.</p>
+          </div>
+        </div>
+
+        <p>The goal is not to follow a generic textbook course. The goal is to build the English you need for real professional situations.</p>
+
+        <div class="method-combines">
+          <div class="method-combines-label">Each module combines:</div>
+          <ul>
+            <li>Professional communication strategy</li>
+            <li>Useful English phrasing</li>
+            <li>Live practice with feedback</li>
+          </ul>
+        </div>
+
+        <div class="method-modal-byline">Created by Emrys</div>
+      </div>
+    </div>
+  </div>
 
   <script>
     // ═══════════════════════════════════════════════
@@ -3187,6 +3454,23 @@
     state.highestPage = 1;
     updateProgress(1);
     updateBottomBar(1);
+
+    // ═══════════════════════════════════════════════
+    // METHOD NOTES MODAL
+    // ═══════════════════════════════════════════════
+    function openMethodNotes() {
+      const overlay = document.getElementById('methodNotesOverlay');
+      if (overlay) overlay.classList.add('open');
+    }
+
+    function closeMethodNotes() {
+      const overlay = document.getElementById('methodNotesOverlay');
+      if (overlay) overlay.classList.remove('open');
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeMethodNotes();
+    });
   </script>
 </body>
 
