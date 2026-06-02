@@ -980,6 +980,15 @@
       z-index: 1;
     }
 
+    .module-hero-bottom {
+      display: flex;
+      align-items: stretch;
+      gap: 10px;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
     .module-hero-path {
       display: inline-flex;
       align-items: center;
@@ -987,11 +996,46 @@
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.15);
       border-radius: 8px;
-      padding: 8px 14px;
+      padding: 0 14px;
       font-size: 13px;
       font-weight: 500;
       position: relative;
       z-index: 1;
+    }
+
+    .btn-open-module {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--teal);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 0 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 1;
+      min-height: 40px;
+    }
+
+    .btn-open-module:hover {
+      background: var(--teal-light);
+      transform: translateY(-1px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-open-module svg {
+      transition: transform 0.2s;
+    }
+
+    .btn-open-module:hover svg {
+      transform: translateX(3px);
     }
 
     /* OVERRIDE ROW */
@@ -1705,6 +1749,16 @@
         font-size: 13.5px;
       }
 
+      .module-hero-bottom {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-open-module {
+        justify-content: center;
+        min-height: 44px;
+      }
+
       .chip-break {
         display: none;
       }
@@ -2375,12 +2429,20 @@
           <div class="module-hero-eyebrow">Recommended First Module</div>
           <div class="module-hero-title" id="ap-module-title">—</div>
           <div class="module-hero-desc" id="ap-module-desc">—</div>
-          <div class="module-hero-path" id="ap-module-path">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <rect x="1" y="2" width="12" height="10" rx="2" stroke="white" stroke-width="1.2" opacity="0.7" />
-              <path d="M4 5h6M4 7.5h4" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
-            </svg>
-            —
+          <div class="module-hero-bottom">
+            <div class="module-hero-path" id="ap-module-path">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <rect x="1" y="2" width="12" height="10" rx="2" stroke="white" stroke-width="1.2" opacity="0.7" />
+                <path d="M4 5h6M4 7.5h4" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+              </svg>
+              —
+            </div>
+            <a class="btn-open-module" id="ap-module-btn" href="#" target="_blank" rel="noopener">
+              Open Module
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
           </div>
         </div>
 
@@ -3416,6 +3478,23 @@
       }
     }
 
+    const MODULE_URLS = [
+      'https://vagabondigital.github.io/client-call-confidence-module/',
+      'https://vagabondigital.github.io/discovery-call-foundations-module/',
+      'https://vagabondigital.github.io/explaining-value-clearly-module/',
+      'https://vagabondigital.github.io/objection-handling-module/',
+      'https://vagabondigital.github.io/follow-up-and-next-steps-module/',
+      'https://vagabondigital.github.io/small-talk-to-business-module/',
+      'https://vagabondigital.github.io/meeting-participation-module/',
+      'https://vagabondigital.github.io/presentation-and-qa-structure-module/',
+      'https://vagabondigital.github.io/sales-interview-prep-module/',
+      'https://vagabondigital.github.io/fluency-under-pressure-module/',
+      'https://vagabondigital.github.io/negotiation-and-difficult-conversations-module/',
+      'https://vagabondigital.github.io/rapport-and-professional-tone-module/',
+      'https://vagabondigital.github.io/sounding-senior-and-in-control-module/',
+      'https://vagabondigital.github.io/cross-cultural-business-communication-module/'
+    ];
+
     function buildActionPlan() {
       const ranked = getTopModules();
       const primaryIdx = state.overriddenModule !== null ? state.overriddenModule : ranked[0].idx;
@@ -3429,6 +3508,7 @@
       document.getElementById('ap-module-path').innerHTML =
         `<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="2" stroke="white" stroke-width="1.2" opacity="0.7"/><path d="M4 5h6M4 7.5h4" stroke="white" stroke-width="1.2" stroke-linecap="round" opacity="0.7"/></svg>
      Typical path: ${mod.path} lessons`;
+      document.getElementById('ap-module-btn').href = MODULE_URLS[primaryIdx];
 
       // Path range
       document.getElementById('ap-path-range').textContent = mod.path;
