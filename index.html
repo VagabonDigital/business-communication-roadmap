@@ -1038,7 +1038,10 @@
       transform: translateX(3px);
     }
 
-    /* OVERRIDE ROW */
+    .btn-label-short,
+    .focus-label-short { display: none; }
+    .btn-label-full,
+    .focus-label-full  { display: inline; }
     .override-row {
       display: flex;
       align-items: center;
@@ -1754,10 +1757,20 @@
         align-items: stretch;
       }
 
+      .module-hero-path {
+        min-height: 48px;
+        justify-content: center;
+      }
+
       .btn-open-module {
         justify-content: center;
-        min-height: 44px;
+        min-height: 48px;
       }
+
+      .btn-label-full,
+      .focus-label-full  { display: none; }
+      .btn-label-short,
+      .focus-label-short { display: inline; }
 
       .chip-break {
         display: none;
@@ -3234,7 +3247,7 @@
 
       // Label for continue
       if (n === 5) {
-        btnLabel.textContent = 'See Action Plan';
+        btnLabel.innerHTML = '<span class="btn-label-full">See Action Plan</span><span class="btn-label-short">Action Plan</span>';
       } else {
         btnLabel.textContent = 'Continue';
       }
@@ -3276,8 +3289,9 @@
           const focusText = secondary
             ? `${formatFocusName(primary)} + ${formatFocusName(secondary)}`
             : formatFocusName(primary);
+          const count = secondary ? 2 : 1;
 
-          selCount.innerHTML = `Focus: <strong>${focusText}</strong>`;
+          selCount.innerHTML = `<span class="focus-label-full">Focus: <strong>${focusText}</strong></span><span class="focus-label-short">${count} selected</span>`;
           selCount.classList.add('visible');
         } else {
           selCount.textContent = '';
