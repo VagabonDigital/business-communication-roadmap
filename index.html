@@ -1005,6 +1005,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
       box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
     .override-label {
@@ -1018,6 +1019,8 @@
 
     .override-select {
       flex: 1;
+      min-width: 0;
+      max-width: 100%;
       border: none;
       background: transparent;
       font-family: 'DM Sans', sans-serif;
@@ -1026,6 +1029,8 @@
       color: var(--navy);
       cursor: pointer;
       outline: none;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* ROADMAP SUMMARY */
@@ -3527,6 +3532,7 @@
       state.focus = { primary: null, secondary: null };
       state.upgrade = [];
       state.overriddenModule = null;
+      state.currentPage = 1;
       state.highestPage = 1;
 
       document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
@@ -3563,4 +3569,3 @@
 </body>
 
 </html>
->
