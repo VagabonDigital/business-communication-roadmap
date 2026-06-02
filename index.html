@@ -1705,7 +1705,7 @@
         font-size: 13.5px;
       }
 
-      .selected-count {
+      .chip-break {
         display: none;
       }
 
@@ -3538,7 +3538,8 @@
       document.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
       renderFocusCards();
       document.getElementById('module-override').value = '';
-      document.getElementById('validationMsg').classList.remove('show');
+      const valMsg = document.getElementById('validationMsg');
+      if (valMsg) valMsg.classList.remove('show');
       goToPage(1);
     }
 
